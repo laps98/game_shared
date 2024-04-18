@@ -1,14 +1,15 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:game/levels/level.dart';
 
-class PixelAdventure extends FlameGame {
+class PixelAdventure extends FlameGame with HasKeyboardHandlerComponents {
   late final CameraComponent cam;
 
   @override
-  final world = Level(levelName: 'Level-01');
+  final world = Level(levelName: 'level-01');
 
   @override
   FutureOr<void> onLoad() async {

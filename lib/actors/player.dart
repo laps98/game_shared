@@ -1,23 +1,62 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
+import 'package:flutter/services.dart';
 import 'package:game/pixel_adventude.dart';
 
 enum PlayerState { idle, running, jumping }
 
+enum PlayerDirection { left, right, none }
+
 class Player extends SpriteAnimationGroupComponent
-    with HasGameRef<PixelAdventure> {
+    with HasGameRef<PixelAdventure>, KeyboardHandler {
   String character;
-  Player({position, required this.character}) :super(position: position);
+
+  Player({position, required this.character}) : super(position: position);
   late final SpriteAnimation idleAnimation;
   late final SpriteAnimation runningAnimation;
   late final SpriteAnimation jumpingAnimation;
   final double stepTime = 0.05;
 
+  PlayerDirection playerDirection = PlayerDirection.none;
+  double moveSpeed = 100;
+  Vector2 velocity = Vector2.zero();
+bool isFacingRight = true;
+
   @override
   FutureOr<void> onLoad() {
     _loadAllAnimations();
     return super.onLoad();
+  }
+
+  @override
+  void update(double dt) {
+    _updatePlayerMoviment(dt);
+    super.update(dt);
+  }
+
+  @override
+  bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    final isLeftKeyPressed = keysPressed.contains(LogicalKeyboardKey.keyA) ||
+        keysPressed.contains(LogicalKeyboardKey.arrowLeft);
+    final isUpKeyPressed = keysPressed.contains(LogicalKeyboardKey.keyW) ||
+        keysPressed.contains(LogicalKeyboardKey.arrowUp);
+    final isRightKeyPressed = keysPressed.contains(LogicalKeyboardKey.keyD) ||
+        keysPressed.contains(LogicalKeyboardKey.arrowRight);
+    final isDownKeyPressed = keysPressed.contains(LogicalKeyboardKey.keyS) ||
+        keysPressed.contains(LogicalKeyboardKey.arrowDown);
+
+    if(isLeftKeyPressed && isRightKeyPressed){
+      playerDirection = PlayerDirection.none;
+    }else if(isLeftKeyPressed){
+      playerDirection = PlayerDirection.left;
+    }else if(isRightKeyPressed){
+      playerDirection = PlayerDirection.right;
+    }else {
+      playerDirection = PlayerDirection.none;
+    }
+
+    return super.onKeyEvent(event, keysPressed);
   }
 
   void _loadAllAnimations() {
@@ -35,7 +74,7 @@ class Player extends SpriteAnimationGroupComponent
     current = PlayerState.idle;
   }
 
-  SpriteAnimation _spriteAnimator(String state, int amount){
+  SpriteAnimation _spriteAnimator(String state, int amount) {
     return SpriteAnimation.fromFrameData(
       game.images.fromCache('Main Characters/$character/$state (32x32).png'),
       SpriteAnimationData.sequenced(
@@ -44,5 +83,36 @@ class Player extends SpriteAnimationGroupComponent
         textureSize: Vector2.all(32),
       ),
     );
+  }
+
+  void _updatePlayerMoviment(double dt) {
+    double dirX = 0.0;
+
+    switch (playerDirection) {
+      case PlayerDirection.left:
+        if(isFacingRight){
+          flipHorizontallyAroundCenter();
+          isFacingRight = false;
+        }
+        current = PlayerState.running;
+        dirX -= moveSpeed;
+        break;
+      case PlayerDirection.right:
+        if(!isFacingRight){
+          flipHorizontallyAroundCenter();
+          isFacingRight = true;
+        }
+        dirX += moveSpeed;
+        current = PlayerState.running;
+        break;
+      case PlayerDirection.none:
+        current = PlayerState.idle;
+
+        break;
+      default:
+    }
+
+    velocity = Vector2(dirX, 0.0);
+    position += velocity * dt;
   }
 }
