@@ -9,7 +9,7 @@ import 'package:game/components/player.dart';
 
 class PixelAdventure extends FlameGame with HasKeyboardHandlerComponents, DragCallbacks {
   @override
-  Color backgroundColor() => const Color(0xFF211F30);
+  //Color backgroundColor() => const Color(0xFF211F30);
   late final CameraComponent cam;
   Player player = Player(character: 'Mask Dude');
   late JoystickComponent joystick;
@@ -20,7 +20,7 @@ class PixelAdventure extends FlameGame with HasKeyboardHandlerComponents, DragCa
     // Load all images into cache
     await images.loadAllImages();
 
-    final world = Level(levelName: 'level-01');
+    final world = Level(levelName: 'level-01',player: player);
 
     cam = CameraComponent.withFixedResolution(
       width: 640,

@@ -10,12 +10,13 @@ class Player extends SpriteAnimationGroupComponent
     with HasGameRef<PixelAdventure>, KeyboardHandler {
   String character;
 
-  Player({position, required this.character}) : super(position: position);
+  Player({position, this.character = 'Ninja Frog'}) : super(position: position);
   late final SpriteAnimation idleAnimation;
   late final SpriteAnimation runningAnimation;
   late final SpriteAnimation jumpingAnimation;
   final double stepTime = 0.05;
 
+  double horizontalMovement = 0;
   double moveSpeed = 100;
   Vector2 velocity = Vector2.zero();
 
@@ -27,12 +28,15 @@ class Player extends SpriteAnimationGroupComponent
 
   @override
   void update(double dt) {
+    _updatePlayerState();
     _updatePlayerMoviment(dt);
     super.update(dt);
   }
 
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    horizontalMovement = 0;
+
     final isLeftKeyPressed = keysPressed.contains(LogicalKeyboardKey.keyA) ||
         keysPressed.contains(LogicalKeyboardKey.arrowLeft);
     final isUpKeyPressed = keysPressed.contains(LogicalKeyboardKey.keyW) ||
@@ -41,6 +45,9 @@ class Player extends SpriteAnimationGroupComponent
         keysPressed.contains(LogicalKeyboardKey.arrowRight);
     final isDownKeyPressed = keysPressed.contains(LogicalKeyboardKey.keyS) ||
         keysPressed.contains(LogicalKeyboardKey.arrowDown);
+
+    horizontalMovement += isLeftKeyPressed ? -1 : 0;
+    horizontalMovement += isRightKeyPressed ? 1 : 0;
 
     return super.onKeyEvent(event, keysPressed);
   }
@@ -71,8 +78,24 @@ class Player extends SpriteAnimationGroupComponent
     );
   }
 
+  void _updatePlayerState() {
+    PlayerState playState = PlayerState.idle;
+
+    if (velocity.x < 0 && scale.x > 0) {
+      flipHorizontallyAroundCenter();
+    } else if (velocity.y > 0 && scale.y < 0) {
+      flipHorizontallyAroundCenter();
+    }
+
+    //check id movind, set running
+    if(velocity.x > 0 || velocity.x < 0) playState = PlayerState.running;
+
+    current = PlayerState;
+  }
+
   void _updatePlayerMoviment(double dt) {
-    //velocity = Vector2(dirX, 0.0);
+    velocity.x = horizontalMovement * moveSpeed;
     position.x += velocity.x * dt;
   }
+
 }

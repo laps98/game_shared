@@ -5,9 +5,10 @@ import 'package:flame_tiled/flame_tiled.dart';
 import 'package:game/components/player.dart';
 
 class Level extends World {
-  late String levelName;
+  final String levelName;
+  final Player player;
   late TiledComponent level;
-  Level({required this.levelName});
+  Level({required this.levelName, required this.player});
 
   @override
   FutureOr<void> onLoad() async {
@@ -20,10 +21,7 @@ class Level extends World {
     for (final spawnPoint in spawnPointsLayer!.objects) {
       switch (spawnPoint.class_) {
         case 'Player':
-          final player = Player(
-            character: 'Pink Man',
-            position: Vector2(spawnPoint.x, spawnPoint.y),
-          );
+          player.position = Vector2(spawnPoint.x, spawnPoint.y);
           add(player);
           break;
         default:
