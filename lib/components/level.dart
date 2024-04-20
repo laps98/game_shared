@@ -8,6 +8,7 @@ class Level extends World {
   final String levelName;
   final Player player;
   late TiledComponent level;
+
   Level({required this.levelName, required this.player});
 
   @override
@@ -18,18 +19,19 @@ class Level extends World {
 
     final spawnPointsLayer = level.tileMap.getLayer<ObjectGroup>('Spawnpoints');
 
-    for (final spawnPoint in spawnPointsLayer!.objects) {
-      switch (spawnPoint.class_) {
-        case 'Player':
-          player.position = Vector2(spawnPoint.x, spawnPoint.y);
-          add(player);
-          break;
-        default:
+    if (spawnPointsLayer != null) {
+      for (final spawnPoint in spawnPointsLayer.objects) {
+        switch (spawnPoint.class_) {
+          case 'Player':
+            player.position = Vector2(spawnPoint.x, spawnPoint.y);
+            player.scale.x = 1;
+            add(player);
+            break;
+          default:
+        }
       }
+
+      return super.onLoad();
     }
-
-    //add(Player(character: 'Ninja Frog'));
-
-    return super.onLoad();
   }
 }

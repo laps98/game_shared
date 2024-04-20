@@ -10,19 +10,26 @@ class Player extends SpriteAnimationGroupComponent
     with HasGameRef<PixelAdventure>, KeyboardHandler {
   String character;
 
-  Player({position, this.character = 'Ninja Frog'}) : super(position: position);
+  Player({
+    position,
+    this.character = 'Ninja Frog',
+  }) : super(position: position);
+
+
+  final double stepTime = 0.05;
   late final SpriteAnimation idleAnimation;
   late final SpriteAnimation runningAnimation;
   late final SpriteAnimation jumpingAnimation;
-  final double stepTime = 0.05;
 
   double horizontalMovement = 0;
   double moveSpeed = 100;
+  Vector2 startingPosition = Vector2.zero();
   Vector2 velocity = Vector2.zero();
 
   @override
   FutureOr<void> onLoad() {
     _loadAllAnimations();
+    startingPosition = Vector2(position.x, position.y);
     return super.onLoad();
   }
 
@@ -79,16 +86,16 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _updatePlayerState() {
-    PlayerState playState = PlayerState.idle;
+    PlayerState playerState = PlayerState.idle;
 
     if (velocity.x < 0 && scale.x > 0) {
       flipHorizontallyAroundCenter();
-    } else if (velocity.y > 0 && scale.y < 0) {
+    } else if (velocity.x > 0 && scale.x < 0) {
       flipHorizontallyAroundCenter();
     }
 
-    //check id movind, set running
-    if(velocity.x > 0 || velocity.x < 0) playState = PlayerState.running;
+    // Check if moving, set running
+    if (velocity.x > 0 || velocity.x < 0) playerState = PlayerState.running;
 
     current = PlayerState;
   }

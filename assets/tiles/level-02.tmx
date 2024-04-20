@@ -28,7 +28,7 @@
 24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24
 </data>
  </layer>
- <objectgroup id="2" name="spawnpoints">
+ <objectgroup id="2" name="Spawnpoints">
   <object id="2" name="Player" type="Player" x="79.8574" y="238.972" width="31.8229" height="31.8229"/>
  </objectgroup>
 </map>
