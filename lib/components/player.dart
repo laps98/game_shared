@@ -36,7 +36,7 @@ class Player extends SpriteAnimationGroupComponent
   @override
   void update(double dt) {
     _updatePlayerState();
-    _updatePlayerMoviment(dt);
+    _updatePlayerMovement(dt);
     super.update(dt);
   }
 
@@ -97,10 +97,20 @@ class Player extends SpriteAnimationGroupComponent
     // Check if moving, set running
     if (velocity.x > 0 || velocity.x < 0) playerState = PlayerState.running;
 
-    current = PlayerState;
+    // check if Falling set to falling
+    //if (velocity.y > 0) playerState = PlayerState.falling;
+
+    // Checks if jumping, set to jumping
+    if (velocity.y < 0) playerState = PlayerState.jumping;
+
+    current = playerState;
   }
 
-  void _updatePlayerMoviment(double dt) {
+  void _updatePlayerMovement(double dt) {
+    //if (hasJumped && isOnGround) _playerJump(dt);
+
+    // if (velocity.y > _gravity) isOnGround = false; // optional
+
     velocity.x = horizontalMovement * moveSpeed;
     position.x += velocity.x * dt;
   }
