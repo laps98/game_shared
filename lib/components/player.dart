@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
 import 'package:game/components/collision_block.dart';
+import 'package:game/components/utils.dart';
 import 'package:game/pixel_adventude.dart';
 
 enum PlayerState { idle, running, jumping }
@@ -17,10 +18,14 @@ class Player extends SpriteAnimationGroupComponent
   }) : super(position: position);
 
 
-  final double stepTime = 0.05;
   late final SpriteAnimation idleAnimation;
   late final SpriteAnimation runningAnimation;
   late final SpriteAnimation jumpingAnimation;
+  final double stepTime = 0.05;
+
+  final double _gravity = 9.8;
+  final double _jumpForce = 460;
+  final double _terminalVelocity = 300;
 
   double horizontalMovement = 0;
   double moveSpeed = 100;
@@ -41,6 +46,7 @@ class Player extends SpriteAnimationGroupComponent
     _updatePlayerState();
     _updatePlayerMovement(dt);
     _checkHorizontalCollisions();
+    _applayGravity(dt);
     super.update(dt);
   }
 
@@ -121,7 +127,24 @@ class Player extends SpriteAnimationGroupComponent
 
   void _checkHorizontalCollisions() {
     for(final block in collisionBlock){
-      // handle collision
+      if(!block.isPlatform){
+        if(checkCollision(this, block)){
+          if(velocity.x > 0){
+            velocity.x = 0;
+            position.x = block.x - width;
+          }
+          if(velocity.x < 0){
+            velocity.x = 0;
+            position.x = block.x + block.width + width;
+          }
+        }
+      }
     }
+  }
+
+  void _applayGravity(double dt) {
+    velocity.y += _gravity;
+    velocity.y = velocity.y.clamp(-_jumpForce, _terminalVelocity);
+    position.y += velocity.y * dt;
   }
 }
