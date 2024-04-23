@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:game/components/collision_block.dart';
 import 'package:game/components/player.dart';
 
 class Level extends World {
   final String levelName;
   final Player player;
   late TiledComponent level;
+  List<CollisionBlock> collisionBlocks = [];
 
   Level({required this.levelName, required this.player});
 
@@ -21,7 +23,6 @@ class Level extends World {
 
     if (spawnPointsLayer != null) {
       for (final spawnPoint in spawnPointsLayer.objects) {
-
         switch (spawnPoint.class_) {
           case 'Player':
             player.position = Vector2(spawnPoint.x, spawnPoint.y);
@@ -32,6 +33,32 @@ class Level extends World {
         }
       }
 
+      final collisionsLayer = level.tileMap.getLayer<ObjectGroup>('Collisions');
+
+      if (collisionsLayer != null) {
+        for (final collision in collisionsLayer.objects) {
+          switch (collision.class_) {
+            case 'Platform':
+              final platform = CollisionBlock(
+                position: Vector2(collision.x, collision.y),
+                size: Vector2(collision.width, collision.height),
+                isPlatform: true,
+              );
+              collisionBlocks.add(platform);
+              add(platform);
+              break;
+            default:
+              final block = CollisionBlock(
+                position: Vector2(collision.x, collision.y),
+                size: Vector2(collision.width, collision.height),
+              );
+              collisionBlocks.add(block);
+              add(block);
+          }
+        }
+      }
+
+      player.collisionBlock = collisionBlocks;
       return super.onLoad();
     }
   }

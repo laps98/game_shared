@@ -31,31 +31,31 @@ class PixelAdventure extends FlameGame with HasKeyboardHandlerComponents, DragCa
 
     addAll([cam, world]);
     
-    if(showJoystick){
-      addJoystick();
-    }
+    // if(showJoystick){
+    //   addJoystick();
+    // }
     
     return super.onLoad();
   }
 
-   void addJoystick() {
-     joystick = JoystickComponent(
-       priority: 10,
-       knob: SpriteComponent(
-         sprite: Sprite(
-           images.fromCache('HUD/Knob.png'),
-         ),
-       ),
-       background: SpriteComponent(
-         sprite: Sprite(
-           images.fromCache('HUD/Joystick.png'),
-         ),
-       ),
-       margin: const EdgeInsets.only(left: 32, bottom: 32),
-     );
-
-     add(joystick);
-   }
+   // void addJoystick() {
+   //   joystick = JoystickComponent(
+   //     priority: 10,
+   //     knob: SpriteComponent(
+   //       sprite: Sprite(
+   //         images.fromCache('HUD/Knob.png'),
+   //       ),
+   //     ),
+   //     background: SpriteComponent(
+   //       sprite: Sprite(
+   //         images.fromCache('HUD/Joystick.png'),
+   //       ),
+   //     ),
+   //     margin: const EdgeInsets.only(left: 32, bottom: 32),
+   //   );
+   //
+   //   add(joystick);
+   // }
 
    void updateJoystick() {
      switch (joystick.direction) {

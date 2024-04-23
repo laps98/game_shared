@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="35">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="49">
  <tileset firstgid="1" source="Pixel Adventure.tsx"/>
  <layer id="1" name="Background" width="40" height="23">
   <data encoding="csv">
@@ -30,19 +30,21 @@
  </layer>
  <objectgroup id="2" name="Spawnpoints">
   <object id="5" name="Player" type="Player" x="288.207" y="238.972" width="30.622" height="33.0237"/>
-  <object id="10" x="47.4341" y="46.2332" width="16.2117" height="291.209"/>
-  <object id="11" x="575.814" y="46.8337" width="16.2117" height="289.408"/>
-  <object id="12" x="63.6457" y="46.2332" width="511.568" height="16.8121"/>
-  <object id="15" x="64.8466" y="319.43" width="509.766" height="16.8121"/>
-  <object id="16" x="191.538" y="175.326" width="48.635" height="16.8121"/>
-  <object id="17" x="351.853" y="207.749" width="48.0345" height="15.6112"/>
-  <object id="18" x="431.71" y="271.995" width="95.4686" height="46.8337"/>
-  <object id="19" x="64.2462" y="271.995" width="94.8682" height="46.8337"/>
-  <object id="20" x="64.8466" y="255.784" width="15.0108" height="15.6112"/>
-  <object id="27" type="Platform" x="479.745" y="175.326" width="48.0345" height="16.8121"/>
-  <object id="30" type="Platform" x="480.345" y="223.961" width="48.0345" height="16.8121"/>
-  <object id="31" type="Platform" x="64.2462" y="127.291" width="48.0345" height="16.8121"/>
-  <object id="32" type="Platform" x="64.2462" y="175.326" width="48.0345" height="16.8121"/>
-  <object id="34" type="Platform" x="63.6458" y="223.961" width="48.0345" height="16.8121"/>
+ </objectgroup>
+ <objectgroup id="3" name="Collisions">
+  <object id="35" x="47.7342" y="47.134" width="16.2117" height="291.209"/>
+  <object id="36" x="576.114" y="47.7345" width="16.2117" height="289.408"/>
+  <object id="37" x="63.9458" y="47.134" width="511.568" height="16.8121"/>
+  <object id="38" x="65.1467" y="320.331" width="509.766" height="16.8121"/>
+  <object id="39" x="191.838" y="176.227" width="48.635" height="16.8121"/>
+  <object id="40" x="352.153" y="208.65" width="48.0345" height="15.6112"/>
+  <object id="41" x="432.01" y="272.896" width="95.4686" height="46.8337"/>
+  <object id="42" x="64.5463" y="272.896" width="94.8682" height="46.8337"/>
+  <object id="43" x="65.1467" y="256.685" width="15.0108" height="15.6112"/>
+  <object id="44" type="Platform" x="480.045" y="176.227" width="48.0345" height="16.8121"/>
+  <object id="45" type="Platform" x="480.645" y="224.862" width="48.0345" height="16.8121"/>
+  <object id="46" type="Platform" x="64.5463" y="128.192" width="48.0345" height="16.8121"/>
+  <object id="47" type="Platform" x="64.5463" y="176.227" width="48.0345" height="16.8121"/>
+  <object id="48" type="Platform" x="63.9459" y="224.862" width="48.0345" height="16.8121"/>
  </objectgroup>
 </map>

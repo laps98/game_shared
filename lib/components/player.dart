@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
+import 'package:game/components/collision_block.dart';
 import 'package:game/pixel_adventude.dart';
 
 enum PlayerState { idle, running, jumping }
@@ -25,10 +26,12 @@ class Player extends SpriteAnimationGroupComponent
   double moveSpeed = 100;
   Vector2 startingPosition = Vector2.zero();
   Vector2 velocity = Vector2.zero();
+  List<CollisionBlock> collisionBlock = [];
 
   @override
   FutureOr<void> onLoad() {
     _loadAllAnimations();
+    debugMode = true;
     startingPosition = Vector2(position.x, position.y);
     return super.onLoad();
   }
@@ -37,6 +40,7 @@ class Player extends SpriteAnimationGroupComponent
   void update(double dt) {
     _updatePlayerState();
     _updatePlayerMovement(dt);
+    _checkHorizontalCollisions();
     super.update(dt);
   }
 
@@ -115,4 +119,9 @@ class Player extends SpriteAnimationGroupComponent
     position.x += velocity.x * dt;
   }
 
+  void _checkHorizontalCollisions() {
+    for(final block in collisionBlock){
+      // handle collision
+    }
+  }
 }
