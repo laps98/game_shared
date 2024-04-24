@@ -17,10 +17,10 @@
                 2
             ],
             "scale": 1.66546875,
-            "selectedLayer": 1,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 319.7298057979172,
-                "y": 183.431841636176
+                "x": 318.8291584576414,
+                "y": 178.32817337461302
             }
         },
         "level-02.tmx": {
@@ -53,9 +53,9 @@
     ],
     "project": "sem título.tiled-project",
     "recentFiles": [
+        "level-01.tmx",
         "Pixel Adventure.tsx",
         "level-02.tmx",
-        "level-01.tmx",
         "level.01.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
